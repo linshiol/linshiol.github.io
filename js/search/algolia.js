@@ -1,4 +1,4 @@
-<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script>window.addEventListener('load', () => {
+window.addEventListener('load', () => {
   const openSearch = () => {
     const bodyStyle = document.body.style
     bodyStyle.width = '100%'

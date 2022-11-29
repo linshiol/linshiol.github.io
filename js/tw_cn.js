@@ -1,4 +1,4 @@
-<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script>/* eslint-disable no-undef */
+/* eslint-disable no-undef */
 document.addEventListener('DOMContentLoaded', function () {
   const translate = GLOBAL_CONFIG.translate
   const snackbarData = GLOBAL_CONFIG.Snackbar
