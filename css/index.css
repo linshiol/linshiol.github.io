@@ -362,7 +362,6 @@ canvas:not(#ribbon-canvas),
   -o-animation: to_show 4s;
   -ms-animation: to_show 4s;
   animation: to_show 4s;
-  background: url(http://zfe.space/images/tianqizhizi.jpg);
 }
 #ribbon-canvas {
   -webkit-animation: ribbon_to_show 4s;
