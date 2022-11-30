@@ -1,4 +1,4 @@
- 页脚与头图透明 
+/* 页脚与头图透明 */
 #footer {
   background: transparent !important;
 }
@@ -6,7 +6,7 @@
   background: transparent !important;
 }
 
- 白天模式遮罩透明 
+/* 白天模式遮罩透明 */
 #footer::before {
   background: transparent !important;
 }
@@ -21,9 +21,6 @@
 [data-theme="dark"] #page-header::before {
   background: transparent !important;
 }
-
-
-
 /* 侧边栏个人信息卡片动态渐变色 */
 #aside-content > .card-widget.card-info {
   background: linear-gradient(
@@ -101,13 +98,4 @@
 /* 这里的2是代表导航栏的第2个元素，即有子菜单的元素，可以按自己需求修改 */
 .menus_items .menus_item:nth-child(2) .menus_item_child {
   left: -125px;
-}
-
-#web_bg {
-  /* 背景图像的地址（url括号里）  */
-  background: url(https://blog.qishuo.xyz/img/one30.jpg);
-  /* 背景图像不重复 */
-  background-repeat: no-repeat;
-  /* 背景图像大小 */
-  background-size: cover;
 }
