@@ -446,7 +446,7 @@ document.addEventListener('pjax:error', (e) => {
       console.log('已挂载butterfly_categories_card')
       parent_div_git.insertAdjacentHTML("afterbegin",item_html)
       }
-    if( document.getElementById('recent-posts') && (location.pathname ==='/categories/'|| '/categories/' ==='all')){
+    if( document.getElementById('recent-posts') && (location.pathname ==='/'|| '/' ==='all')){
     butterfly_categories_card_injector_config()
     }
   </script><script data-pjax>
