@@ -221,5 +221,10 @@ div#archive {
         max-width: calc(50% - 10px);
         box-sizing: border-box;
     }
-    
+}
+
+/* 翻页按钮居中 */
+#pagination {
+  width: 100%;
+  margin: auto;
 }
