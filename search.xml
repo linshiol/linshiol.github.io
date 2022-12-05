@@ -59,6 +59,25 @@
     </entry>
     
     
+    
+    <entry>
+      <title>事务的【ACID】四大原则</title>
+      <link href="/post/3.html"/>
+      <url>/post/3.html</url>
+      
+        <content type="html"><![CDATA[<h1 id="事务的【ACID】四大原则"><a href="#事务的【ACID】四大原则" class="headerlink" title="事务的【ACID】四大原则"></a>事务的【ACID】四大原则</h1><p>事务的概念在各个地方都有应用，比如操作系统、Redis、关系型数据库等，但事务的本质概念是一样的，这里基于MySQL数据库介绍事务及其特性</p><h2 id="一：什么是事务"><a href="#一：什么是事务" class="headerlink" title="一：什么是事务"></a>一：什么是事务</h2><p>数据库中：事务（Transaction）是访问和更新数据库的程序执行单元，事务中可能包含一个或多个sql语句，这些语句要么都执行，要么都不执行。</p><p>简单理解：将多各操作打包在一起执行，且支持回滚，就是事务</p><h2 id="二：什么是ACID"><a href="#二：什么是ACID" class="headerlink" title="二：什么是ACID"></a>二：什么是ACID</h2><p>ACID是衡量事务的四个特性</p><ul><li>原子性（Atomicity）</li><li>一致性（Consistency）</li><li>隔离性（Isolation）</li><li>持久性（Durability）</li></ul><p>需要注意的是，在最开始的定义中，事务必须要满足这四个特性。</p><p>但在许多地方的实际应用中，这四个特性并没有被完全实现，比如MySQL、Redis的事务就不支持原子性，所以后来这四个特性渐渐地变成了衡量事务的标准而不是事务的必须条件</p><h2 id="三：原子性（Atomicity）"><a href="#三：原子性（Atomicity）" class="headerlink" title="三：原子性（Atomicity）"></a>三：原子性（Atomicity）</h2><p>原子性是指一个事务是一个不可分割的工作单位，其中的操作要么都做，要么都不做</p><p>数据库中：如果事务中一个sql语句执行失败，则已执行的语句也必须回滚，数据库退回到事务前的状态</p><p>（Ps：上面只是举个例子，要注意的是MySQL的事务并不支持原子性，在MySQL中，如果事务中的一条sql无法执行，它会将这一条sql报错，并继续执行接下来的sql，且已执行的sql也不回滚，除非我们主动使用逻辑判断要求报错时执行回滚，否则MySQL的事务本身是不会回滚的）</p><h2 id="四：持久性（Durability）"><a href="#四：持久性（Durability）" class="headerlink" title="四：持久性（Durability）"></a>四：持久性（Durability）</h2><p>持久性是指事务一旦提交，它对数据库的改变就应该是永久性的。接下来的其他操作或故障不应该对其有任何影响。</p><p>简单理解：就是数据的持久化</p><h2 id="五：隔离性（Isolation）"><a href="#五：隔离性（Isolation）" class="headerlink" title="五：隔离性（Isolation）"></a>五：隔离性（Isolation）</h2><p>与原子性、持久性侧重于研究事务本身不同，隔离性研究的是不同事务之间的相互影响。<strong>隔离性是指，事务内部的操作与其他事务是隔离的，并发执行的各个事务之间不能互相干扰。</strong></p><p>通常使用锁机制来保证事务的隔离性</p><p><strong>1：锁机制</strong></p><p>MySQL数据库中：MyIsam存储引擎只支持表锁，InnoDB存储引擎同时支持表锁和行锁，出于性能考虑，绝大多数情况下使用的都是行锁。</p><p><strong>2：脏读、不可重复读和幻读</strong></p><p>若不保证事务的隔离性，则有可能会出现数据的【脏读、不可重复读和幻读】</p><p>（1）脏读：当前事务(A)中可以读到其他事务(B)未提交的数据（脏数据），这种现象是脏读</p><p>举例如下（以账户余额表为例）：</p><p><img src="https://pic3.zhimg.com/v2-62447627d423da0f3def3c98280bcfea_b.jpg" alt=""></p><p>（2）不可重复读：在事务A中先后两次读取同一个数据，两次读取的结果不一样，这种现象称为不可重复读</p><p>脏读与不可重复读的区别在于：前者读到的是其他事务未提交的数据，后者读到的是其他事务已提交的数据。举例如下：</p><p><img src="https://pic1.zhimg.com/v2-627a25296df794750a5e9a95136528c8_b.jpg" alt=""></p><p>（3）幻读：在事务A中按照某个条件先后两次查询数据库，两次查询结果的条数不同，这种现象称为幻读</p><p>不可重复读与幻读的区别可以通俗的理解为：前者是数据变了，后者是数据的行数变了。举例如下：</p><p><img src="https://pic2.zhimg.com/v2-e19ec984395f37d5aad3e76c056d8e4d_b.jpg" alt=""></p><p><strong>2： 事务隔离级别</strong></p><p>SQL标准中定义了四种隔离级别，并规定了每种隔离级别下上述几个问题是否存在。一般来说，隔离级别越低，系统开销越低，可支持的并发越高，但隔离性也越差。隔离级别与读问题的关系如下：</p><p><img src="https://pic3.zhimg.com/v2-d5de13c680bd4062ef35e65ee00e7d16_b.jpg" alt=""></p><p>在实际应用中，<strong>读未提交</strong>在并发时会导致很多问题，而性能相对于其他隔离级别提高却很有限，因此使用较少。<strong>可串行化</strong>强制事务串行，并发效率很低，只有当对数据一致性要求极高且可以接受没有并发时使用，因此使用也较少。因此在大多数数据库系统中，默认的隔离级别是<strong>读已提交(如Oracle)</strong>或<strong>可重复读</strong></p><p>另外，InnoDB默认的隔离级别是【可重复读】，但是InnoDB通过MVCC（MVCC全称Multi-Version Concurrency Control，即多版本的并发控制协议）避免了幻读问题</p><h2 id="六：一致性（Consistency）"><a href="#六：一致性（Consistency）" class="headerlink" title="六：一致性（Consistency）"></a>六：一致性（Consistency）</h2><p>MySQL中：一致性是指事务执行结束后，<strong>数据库的完整性约束没有被破坏，事务执行的前后都是合法的数据状态。</strong></p><p>数据库的完整性约束包括但不限于：实体完整性（如行的主键存在且唯一）、列完整性（如字段的类型、大小、长度要符合要求）、外键约束、用户自定义完整性（如转账前后，两个账户余额的和应该不变）</p><p>简单理解：就是事务执行前后，数据的改变都是合法，且各方数据都是一致的</p><p>另外，我们应当理解到，事务的目的就是为了数据一致性</p><p><strong>如何实现事务的一致性：</strong></p><p>1：保证事务的原子性、持久性和隔离性</p><p>2：数据库本身提供保障，完善其完整性约束</p><p>3：应用层面进行保障，例如如果转账操作只扣除转账者的余额，而没有增加接收者的余额，无论数据库实现的多么完美，也无法保证状态的一致</p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 事务的四大原则 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
   
   
 </search>
