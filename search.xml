@@ -2,6 +2,25 @@
 <search> 
   
   
+    
+    <entry>
+      <title>Mac PHP代码延时更新慢解决方案</title>
+      <link href="/post/5.html"/>
+      <url>/post/5.html</url>
+      
+        <content type="html"><![CDATA[<h1 id="Mac-PHP代码延时更新慢解决方案"><a href="#Mac-PHP代码延时更新慢解决方案" class="headerlink" title="Mac PHP代码延时更新慢解决方案"></a>Mac PHP代码延时更新慢解决方案</h1><p>用phpinfo()函数，查看PHP开启模块中是否包含ZendOpcache这类opcode缓存。<br>如果有，那么打开php.ini查找下 “opcache”，将60改为0即可立即生效</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">opcache.revalidate_freq=60</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> PHP代码延时更新慢解决方案 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
   
   
 </search>
